@@ -2,10 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// mdoule import
-if (process.env.NODE_ENV == "development") { // to be deployed in Heroku
+const Product = require("./modules/Product")
+require("dotenv").config(); // keep it like it if you do not have Heroku
+/* if (process.env.NODE_ENV == "development") { // to be deployed in Heroku
     require("dotenv").config();
-  }
+  } */
 
 const app = express();
 
@@ -14,11 +15,24 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+//Connect to MongoDB
+mongoose.connect(process.env.DB_CONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
+
 // ROUTES
+
+let product = [];
 
 app.get("/", (req, res)=>{  
     res.send("Hello world!"); 
 });
+
+app.get("/")
 
 // listen 
 
