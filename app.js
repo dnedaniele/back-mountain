@@ -27,7 +27,7 @@ mongoose
 
 // ROUTES
 
-let product = [];
+let products = [];
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
@@ -39,6 +39,7 @@ app.post("/product", async (req, res) => {
     img: req.body.img,
     name: req.body.name,
     description: req.body.description,
+    price: req.body.price,
   });
   try {
     const savedProduct = await product.save();
