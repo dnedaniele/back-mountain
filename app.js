@@ -57,6 +57,8 @@ app.get("/shop-list", async (req, res) => {
   res.status(200).json(shopList);
 });
 
+// GET only one Product selected by ID
+
 // listen
 
 const PORT = process.env.PORT || 3500;
