@@ -60,7 +60,7 @@ app.get("/shop-list", async (req, res) => {
 // GET only one Product selected by ID
 
 app.get("/product/:productId", async (req, res)=>{
- const productId = req.params;
+ const productId = req.params.productId;
  console.log(productId); 
  const product = await Product.findOne({_id: productId});
  if (!product) {
@@ -70,9 +70,17 @@ app.get("/product/:productId", async (req, res)=>{
  }
 });
 
+// DELETE
+
+app.delete("/product/:productId", async (req, res) => {
+    const productId = req.params.productId;
+    await Product.deleteOne({ _id: productId }).exec(); //
+    res.status(204).end();
+  });
+
 // PATCH - Change the details of a Product selected by Id
 
-app.patch("product/:productId", async (req, res) =>{
+ app.patch("product/:productId", async (req, res) =>{
 try{
     const product = await Product.findByIdAndUpdate(req.params.productId , req.body,{
         new: true,
@@ -81,7 +89,7 @@ try{
     console.log(err);
     res.status(500).json({message: "an internal error has occurred"});
 }
-});
+}); 
 
 // listen
 
