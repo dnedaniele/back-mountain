@@ -59,6 +59,30 @@ app.get("/shop-list", async (req, res) => {
 
 // GET only one Product selected by ID
 
+app.get("/product/:productId", async (req, res)=>{
+ const productId = req.params;
+ console.log(productId); 
+ const product = await Product.findOne({_id: productId});
+ if (!product) {
+     res.status(404).end();
+ }else{
+     res.json(product);
+ }
+});
+
+// PATCH - Change the details of a Product selected by Id
+
+app.patch("product/:productId", async (req, res) =>{
+try{
+    const product = await Product.findByIdAndUpdate(req.params.productId , req.body,{
+        new: true,
+    }).exec();
+}catch(err){
+    console.log(err);
+    res.status(500).json({message: "an internal error has occurred"});
+}
+});
+
 // listen
 
 const PORT = process.env.PORT || 3500;
